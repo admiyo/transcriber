@@ -3,14 +3,18 @@
 
 $(function() {
 
-    var delta = 25;
+    //something is not right here, Mr. Downes.
+    var radius=10;
+    var diameter = 25;
 
     var that = this;
     var next_note = 30;
-    var top_line = 75
+    var top_line = 125
+    var bottom_line = top_line + (4*diameter);
     var offsetLeft =  0;
     var offsetTop = 0;
     var width = 1100;
+
 
     function drawIntro(svg) {
 
@@ -21,7 +25,7 @@ $(function() {
 
         var i;
         for (i = 0; i < 5 ; i += 1){
-            svg.line(g, delta, delta*i+top_line, width, delta*i+top_line);
+            svg.line(g, diameter, diameter*i+top_line, width, diameter*i+top_line);
         }
         that.svg = svg;
     }
@@ -29,37 +33,50 @@ $(function() {
     $('#svgintro').svg({onLoad: drawIntro});
 
 
+     function quantize(centerY){
+        var steps;
+        note_y = top_line;
+        if (top_line > centerY){
+            steps =  (top_line - centerY) / (diameter/2);
+            for (i = 0; i < steps; i += 1){
+                note_y -= diameter/2;
+            }
+        }else{
+            steps =  (top_line - centerY) / (diameter/2)+1;
+
+            for (i = 0; i > steps; i -= 1){
+                note_y += diameter/2;
+            }
+        }
+         return note_y;
+    }
+
     $('#svgintro').click(function(evt){
         div = this;
         var g = that.svg.group({stroke: 'black', strokeWidth: 2});
         var centerY = evt.layerY-this.offsetTop;
-        var centerX=evt.layerX-this.offsetLeft;
-        var radius=10;
+        var center_x=evt.layerX-this.offsetLeft;
         var i;
+        //for now, short circuit the function.  Later, we'll use this test to decide if we are adding new notes or adjusting previous.
+        if (next_note > center_x) return;
 
-        //alert("add in a rounding function so  (top_line - centerY) / delta is either 0 or delta ");
+        note_y =quantize(centerY);
 
-        var steps;
-        steps =  (top_line - centerY) / (delta/2) +1 ;
-        noteY = top_line;
-        if (top_line > centerY){
-            for (i = 0; i < steps; i += 1){
-                noteY -= delta/2;
-            }
-        }else{
-            for (i = 0; i > steps; i -= 1){
-                noteY += delta/2;
-            }
-        }
-
-        that.svg.circle(next_note, noteY, radius,
+        that.svg.circle(next_note, note_y, radius,
                         {fill: 'none', stroke: 'black', strokeWidth: 3});
 
-        if (noteY > top_line){
-            for (i = top_line + 2*delta; i <= noteY; i += (2*delta)){
-                that.svg.line(g, next_note-delta, i, next_note+delta, i);
+        if (note_y < top_line){
+            for (i = top_line - diameter; i >= note_y; i -= diameter){
+                that.svg.line(g, next_note-(diameter/2), i, next_note+(diameter/2), i);
             }
         }
+
+        if (note_y > bottom_line){
+            for (i = bottom_line + diameter; i <= note_y; i += diameter){
+                that.svg.line(g, next_note-(diameter/2), i, next_note+(diameter/2), i);
+            }
+        }
+
 
         next_note += 30;
     });
