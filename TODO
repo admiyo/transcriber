@@ -1,0 +1,29 @@
+;; This buffer is for notes you don't want to save, and for Lisp evaluation.
+;; If you want to create a file, visit that file with C-x C-f,
+;; then enter the text in that file's own buffer.
+
+Ideas for transcriber
+
+1.  Highlight location for next note
+2.  Highlight where quantized note would be placed
+3.  If clicking lefct of last, figure out if onh a note or between
+4.  if between push notes right
+5. right click to add a rest?
+6. click selects  
+drag up down changes pitch 
+left right changes duration (left shorter, right longer)
+
+7. Rest and Note are two different modes.  Select at top of page
+
+
+
+Need to be able to select and change SVG elements on the page.
+
+Probably should draw everything into a group, and then  move the group to the cursor location.  Could this be done via JS prototypes?
+
+Need to erase lines if changing pitch above/below the staff
+
+
+Find a midi or media plugin that we can script.  If needs be, make one media file per pitch.
+
+
