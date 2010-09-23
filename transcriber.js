@@ -3,9 +3,8 @@
 
 $(function() {
 
-    //something is not right here, Mr. Downes.
-    var radius=10;
-    var diameter = 25;
+    var radius=13;
+    var diameter = 26;
 
     var that = this;
     var next_note = 30;
@@ -30,6 +29,10 @@ $(function() {
         }
         that.svg = svg;
         that.notes = notes;
+
+        that.svg.script("function circle_click(evt) {\n  var circle = evt.target;\n  circle.setAttribute(\"fill\", \"blue\");\n}", "text/ecmascript"); 
+
+
     }
 
     $('#moveit').click(function(){
@@ -110,6 +113,8 @@ $(function() {
 
 
 
+    var note_count=0;
+
     $('#svgintro').click(function(evt){
         div = this;
         var g = that.svg.group({stroke: 'black', strokeWidth: 2});
@@ -117,28 +122,78 @@ $(function() {
         var center_x=evt.layerX-this.offsetLeft;
         var i;
         //for now, short circuit the function.  Later, we'll use this test to decide if we are adding new notes or adjusting previous.
-        if (next_note > center_x) return;
+        if (next_note > center_x) {
+            return;
+        }else{
+            //refactor this to function add_note()
+            note_y =quantize_y(center_y);
+            redo_vert(center_x);
+            var note_id = "note_"+note_count;
+            note_count +=1;
+            var note = that.svg.circle
+            (g,next_note, note_y, radius,
+             {
+                 id:  note_id,
+                 fill: 'clear',
+                 stroke: 'black',
+                 strokeWidth: 3});
+            var svg = $('#svgintro').svg('get');
 
-        note_y =quantize_y(center_y);
+            /*
+              These two functions have to be scoped in the same function where 
+              the div tag is definied as they access the 'note' variable
+              that is linked with the div tag */
 
-        redo_vert(center_x);
-
-        that.svg.circle(g,next_note, note_y, radius,
-                        {fill: 'none', stroke: 'black', strokeWidth: 3});
-
-        if (note_y < top_line){
-            for (i = top_line - diameter; i >= note_y; i -= diameter){
-                that.svg.line(g, next_note-(diameter/2), i, next_note+(diameter/2), i);
+            function  select_note(evt){
+                $(this).css({
+                    left:(div_left-radius) +"px",
+                    top: (div_top-radius)  +"px",
+                    height: (2*diameter) +"px",
+                    width: (2*diameter)+ "px",
+                    border: "3px coral solid"
+                });
+                $(this).click(unselect_note);
             }
-        }
 
-        if (note_y > bottom_line){
-            for (i = bottom_line + diameter; i <= note_y; i += diameter){
-                that.svg.line(g, next_note-(diameter/2), i, next_note+(diameter/2), i);
+            function  unselect_note(evt){
+                $(this).css({
+                    left:div_left +"px",
+                    top: div_top  +"px",
+                    height: diameter +"px",
+                    width: diameter+ "px",
+                    border: 'none'
+                });
+                $(this).click(select_note);
             }
-        }
-        notes[notes.length] = g;
-        next_note += 30;
 
+            var div_top =(note_y+this.offsetTop - radius);
+            var div_left =(next_note+ this.offsetLeft - radius)
+            var div = $('<div/>',{
+                css:{
+                    position:'absolute',
+                    left:div_left +"px",
+                    top:div_top+"px",
+                    height: diameter +"px",
+                    width: diameter+ "px",
+                },
+                border: 1,
+                click: select_note,
+                nate: note
+            }).appendTo($('body'));
+
+
+            if (note_y < top_line){
+                for (i = top_line - diameter; i >= note_y; i -= diameter){
+                    that.svg.line(g, next_note-(diameter/2), i, next_note+(diameter/2), i);
+                }
+            }
+            if (note_y > bottom_line){
+                for (i = bottom_line + diameter; i <= note_y; i += diameter){
+                    that.svg.line(g, next_note-(diameter/2), i, next_note+(diameter/2), i);
+                }
+            }
+            notes[notes.length] = note;
+            next_note += diameter * 2;
+        }
     });
 });
