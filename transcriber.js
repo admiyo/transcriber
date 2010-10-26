@@ -2,17 +2,30 @@
 
 
 $(function() {
+    transcriber({
+        container: $('#svgintro'),
+        radius: 13,
+        clef: 'g',
+        border: {
+            left: 30,
+            right: 100,
+            top: 30
+        }});
+})
 
-    var radius=13;
-    var diameter = 26;
+function transcriber(spec){
+    var container = spec.container;
+    var radius = spec.radius;
+
+    var diameter = 2*radius;
 
     var that = this;
-    var next_note = 30;
+    var next_note = spec.border.left;
     var top_line = 125
     var bottom_line = top_line + (4*diameter);
     var offsetLeft =  0;
     var offsetTop = 0;
-    var width = 1100;
+    var width =  1200 - spec.border.right;//  1100;
 
     var notes=[];
 
@@ -38,7 +51,7 @@ $(function() {
     $('#moveit').click(function(){
     });
 
-    $('#svgintro').svg({onLoad: drawIntro});
+    container.svg({onLoad: drawIntro});
 
 
      function quantize_y(center_y){
@@ -104,7 +117,7 @@ $(function() {
                                    {stroke: 'yellow', strokeWidth: 4});
     }
 
-    $('#svgintro').mousemove(function(evt){
+    container.mousemove(function(evt){
         var center_y = evt.layerY-this.offsetTop;
         var center_x=evt.layerX-this.offsetLeft;
         redo_vert(center_x);
@@ -115,7 +128,7 @@ $(function() {
 
     var note_count=0;
 
-    $('#svgintro').click(function(evt){
+    container.click(function(evt){
         div = this;
         var g = that.svg.group({stroke: 'black', strokeWidth: 2});
         var center_y = evt.layerY-this.offsetTop;
@@ -137,7 +150,7 @@ $(function() {
                  fill: 'clear',
                  stroke: 'black',
                  strokeWidth: 3});
-            var svg = $('#svgintro').svg('get');
+            var svg = container.svg('get');
 
             /*
               These two functions have to be scoped in the same function where 
@@ -181,19 +194,21 @@ $(function() {
                 nate: note
             }).appendTo($('body'));
 
+            function note_staves(g, next_note, i){
+                that.svg.line(g, next_note-radius, i, next_note+radius, i);
+            }
 
             if (note_y < top_line){
                 for (i = top_line - diameter; i >= note_y; i -= diameter){
-                    that.svg.line(g, next_note-(diameter/2), i, next_note+(diameter/2), i);
+                    note_staves(g, next_note, i);
                 }
-            }
-            if (note_y > bottom_line){
+            }else  if (note_y > bottom_line){
                 for (i = bottom_line + diameter; i <= note_y; i += diameter){
-                    that.svg.line(g, next_note-(diameter/2), i, next_note+(diameter/2), i);
+                    note_staves(g, next_note, i);
                 }
             }
             notes[notes.length] = note;
             next_note += diameter * 2;
         }
     });
-});
+};
