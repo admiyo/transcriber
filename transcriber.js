@@ -2,38 +2,67 @@
 
 
 $(function() {
+
     transcriber({
-        container: $('#svgintro'),
-        radius: 13,
+        container: $('#top'),
+        radius: 8,
         clef: 'g',
         border: {
             left: 30,
             right: 100,
-            top: 30
+            top: 0
         }});
+
+    transcriber({
+        container: $('#middle'),
+        radius: 16,
+        clef: 'g',
+        border: {
+            left: 30,
+            right: 100,
+            top: 0
+        }});
+
+    transcriber({
+        container: $('#bottom'),
+        radius: 8,
+        clef: 'g',
+        border: {
+            left: 30,
+            right: 100,
+            top: 0
+        }});
+
+
+    for (var i = 0; i < 10; i+=1){
+
+        var div = $('#leftnav').append($('<div></div>',{
+            id: 'staff_i',
+            'class' : 'staff',
+            style: '{height: 50; width: 200; }'
+        }));
+    }
 })
 
 function transcriber(spec){
+
+
     var container = spec.container;
     var radius = spec.radius;
 
     var diameter = 2*radius;
 
-    var that = this;
+    var that = {};
     var next_note = spec.border.left;
-    var top_line = 125
+    var top_line = radius * 8 + spec.border.top;
     var bottom_line = top_line + (4*diameter);
-    var offsetLeft =  0;
-    var offsetTop = 0;
-    var width =  1200 - spec.border.right;//  1100;
+    var width =  parseInt(container.css('width')) - spec.border.right;//  1100;
 
     var notes=[];
 
     function drawIntro(svg) {
-
-        offsetLeft = this.offsetLeft;
-        offsetTop = this.offsetTop;
-
+        that.offsetLeft = this.offsetLeft;
+        that.offsetTop = this.offsetTop;
         var g = svg.group({stroke: 'black', strokeWidth: 2});
 
         var i;
@@ -44,7 +73,6 @@ function transcriber(spec){
         that.notes = notes;
 
         that.svg.script("function circle_click(evt) {\n  var circle = evt.target;\n  circle.setAttribute(\"fill\", \"blue\");\n}", "text/ecmascript"); 
-
 
     }
 
@@ -73,7 +101,6 @@ function transcriber(spec){
     }
 
 
-
     function quantize_x(center_x){
         var steps;
         note_x = diameter;
@@ -87,7 +114,6 @@ function transcriber(spec){
         }
          return note_x;
     }
-
 
     var last_horiz;
     var last_vert;
@@ -118,12 +144,11 @@ function transcriber(spec){
     }
 
     container.mousemove(function(evt){
-        var center_y = evt.layerY-this.offsetTop;
-        var center_x=evt.layerX-this.offsetLeft;
+        var center_y = evt.layerY;//-this.offsetTop;
+        var center_x=evt.layerX;//-this.offsetLeft;
         redo_vert(center_x);
         redo_horiz(center_y);
     });
-
 
 
     var note_count=0;
@@ -131,8 +156,8 @@ function transcriber(spec){
     container.click(function(evt){
         div = this;
         var g = that.svg.group({stroke: 'black', strokeWidth: 2});
-        var center_y = evt.layerY-this.offsetTop;
-        var center_x=evt.layerX-this.offsetLeft;
+        var center_y = evt.layerY;//-that.offsetTop;
+        var center_x=evt.layerX;//-that.offsetLeft;
         var i;
         //for now, short circuit the function.  Later, we'll use this test to decide if we are adding new notes or adjusting previous.
         if (next_note > center_x) {
@@ -150,7 +175,7 @@ function transcriber(spec){
                  fill: 'clear',
                  stroke: 'black',
                  strokeWidth: 3});
-            var svg = container.svg('get');
+            //var svg = container.svg('get');
 
             /*
               These two functions have to be scoped in the same function where 
@@ -195,15 +220,15 @@ function transcriber(spec){
             }).appendTo($('body'));
 
             function note_staves(g, next_note, i){
-                that.svg.line(g, next_note-radius, i, next_note+radius, i);
+                that.svg.line(g, next_note-(1.5 *radius), i, next_note+( 1.5 *radius), i);
             }
 
             if (note_y < top_line){
-                for (i = top_line - diameter; i >= note_y; i -= diameter){
+                for (i = top_line - diameter; i > note_y - radius; i -= diameter){
                     note_staves(g, next_note, i);
                 }
             }else  if (note_y > bottom_line){
-                for (i = bottom_line + diameter; i <= note_y; i += diameter){
+                for (i = bottom_line + diameter; i < note_y + radius; i += diameter){
                     note_staves(g, next_note, i);
                 }
             }

@@ -1,0 +1,6 @@
+.staff {
+    border: .2em dotted #900;
+    display:block;
+    position: relative;
+    float:left
+}
