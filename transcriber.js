@@ -17,6 +17,7 @@ $(function() {
         container: $('#middle'),
         radius: 16,
         clef: 'g',
+        editable: true,
         border: {
             left: 30,
             right: 100,
@@ -34,13 +35,25 @@ $(function() {
         }});
 
 
-    for (var i = 0; i < 10; i+=1){
+    for (var i = 0; i < 20; i+=1){
 
-        var div = $('#leftnav').append($('<div></div>',{
+        var div = $('<div></div>',{
             id: 'staff_i',
             'class' : 'staff',
             style: '{height: 50; width: 200; }'
-        }));
+        }).appendTo($('#leftnav'));
+
+        transcriber({
+        container: div,
+        radius: 2,
+        clef: 'g',
+        border: {
+            left: 0,
+            right: 0,
+            top: 0
+        }});
+
+
     }
 })
 
@@ -76,8 +89,6 @@ function transcriber(spec){
 
     }
 
-    $('#moveit').click(function(){
-    });
 
     container.svg({onLoad: drawIntro});
 
@@ -143,16 +154,19 @@ function transcriber(spec){
                                    {stroke: 'yellow', strokeWidth: 4});
     }
 
+    
+
+    var note_count=0;
+
+    if (spec.editable){
+
     container.mousemove(function(evt){
         var center_y = evt.layerY;//-this.offsetTop;
         var center_x=evt.layerX;//-this.offsetLeft;
         redo_vert(center_x);
         redo_horiz(center_y);
     });
-
-
-    var note_count=0;
-
+        
     container.click(function(evt){
         div = this;
         var g = that.svg.group({stroke: 'black', strokeWidth: 2});
@@ -235,5 +249,6 @@ function transcriber(spec){
             notes[notes.length] = note;
             next_note += diameter * 2;
         }
-    });
+    })
+    };
 };
