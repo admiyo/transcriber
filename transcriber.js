@@ -57,7 +57,7 @@ var bot_staff =    transcriber({
     }
 
     $('#load').click(function(){
-        top_staff.load('loadurl');
+        top_staff.load('file:music.json');
     });
 
     $('#save').click(function(){
@@ -344,16 +344,50 @@ function transcriber(spec){
         return note_y;
     }
 
+    var sharp_keys = { g:1,d:2,a:3,e:4,b:5,"f#":6,"c#":7};
+    var flat_keys = { f:1, "b-":2,"e-":3,"a-":4,"d-":5,"g-":6};
+
     that.load = function(url){
-        var note_y = top_line;
-        for (var pitch = 51; pitch < 76; pitch += 1){
-            var y = pitch_to_y(pitch,true);
+
+        function success_handler(response){
+            var note_y = top_line;
+            var note;
+            var pitch;
+
             var accidental = null;
-            if (is_accidental(pitch)){
-                accidental = 'f';
+            accidental =  (sharp_keys[response.key]) ? 's' : 'f';
+
+            for (var i = 0 ; i < response.notes.length; i += 1){
+                note =  response.notes[i];
+                pitch = note[0];
+                var y = pitch_to_y(pitch,true);
+                add_note(y, is_accidental(pitch) ? accidental : null );
             }
-            add_note(y, accidental );
         }
+
+
+        function error_handler(resp){
+            alert('error');
+        }
+
+        var ajax_options = {
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            async: true,
+            processData: false
+        };
+        $.ajaxSetup(ajax_options);
+        var request = {
+            url: url,
+            success: success_handler,
+            error: error_handler
+        };
+
+        $.ajax(request);
+
+
+
     }
 
     that.save = function(url){
@@ -362,3 +396,4 @@ function transcriber(spec){
 
     return that;
 };
+
