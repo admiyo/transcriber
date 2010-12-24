@@ -58,6 +58,12 @@ var bot_staff =    transcriber({
 
     $('#load').click(function(){
         top_staff.load('file:music.json');
+	mid_staff.load('file:music.json');
+	left_staff[0].load('file:music.json');
+    });
+
+    $('#clear').click(function(){
+        mid_staff.clear();
     });
 
     $('#save').click(function(){
@@ -76,12 +82,19 @@ function transcriber(spec){
     var diameter = 2*radius;
 
     var that = {};
-    var next_note = spec.border.left;
     var top_line = radius * 8 + spec.border.top;
     var bottom_line = top_line + (4*diameter);
     var width =  parseInt(container.css('width')) - spec.border.right;//  1100;
 
+
+    var next_note;
     var notes=[];
+
+    function  reset(){
+        next_note = spec.border.left;
+        notes=[];
+    }
+    reset();
 
     function drawIntro(svg) {
         that.offsetLeft = this.offsetLeft;
@@ -238,7 +251,9 @@ function transcriber(spec){
     */
     function add_note(note_y,accidental) {
 
-        var g = that.svg.group({stroke: 'black', strokeWidth: 2});
+        var g = that.svg.group({stroke: 'black',
+                                strokeWidth: 2,
+                                'class':'notes'});
         var i;
         var note_id = "note_"+note_count;
         note_count +=1;
@@ -348,7 +363,7 @@ function transcriber(spec){
     var flat_keys = { f:1, "b-":2,"e-":3,"a-":4,"d-":5,"g-":6};
 
     that.load = function(url){
-
+        that.clear();
         function success_handler(response){
             var note_y = top_line;
             var note;
@@ -386,8 +401,11 @@ function transcriber(spec){
 
         $.ajax(request);
 
+    }
 
-
+    that.clear = function(){
+        $("g.notes",container).remove();
+        reset();
     }
 
     that.save = function(url){
