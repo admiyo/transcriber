@@ -162,7 +162,7 @@ function transcriber(spec){
         }else{
             center_x = quantize_x(center_x);
             last_vert = that.svg.line( center_x, 0 , center_x, 800,
-                                       {stroke: 'yellow', strokeWidth: 4});
+                                       {stroke: 'green', strokeWidth: 4});
         }
     }
 
