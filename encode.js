@@ -43,8 +43,27 @@ On the piano, this pattern is illustrated by the Black keys.  The are arrayed in
 We calculate note Y position offsets from the top line.  Thus In G clef, F is top_line.  E is top_line + radius, D is top_line + 2 * Radius, and so on.  Middle C is topline + 10 * radius.
 
 
+Idea 1:
 
 For Duration, we want to avoid floating point operations.  If the smallest we can reasonably expect someone to write usic is 1/64 note, and we assume away the numerator, then a quarter note becomes 1/4 * 64 = 16.  A Whole note is 64.
+
+
+For Triplets, we will give the three notes as equal a value as possible.  Three Quarter note triplets should have a total duration of a half note, or 32.  The first two notes wouild get durations of 11, and the last would get a duration of 10.  For 3 eighth note triplets, which should have an overall duraiton of 16, the first gets 6, and the next two get 5.  For 3 sixteenth note triplets, the overall duration is 8:  2X3, 1X2.  For 32 note triplets, which should have a duration of 4, 2X2,2X1.
+
+THe problem with thie approach is that there is no way to determine from the stored format that a set of notes should be a triplet.
+
+
+Idea 2:
+
+Duration is saved as the denominator of the duration of the note.  Thus, an eight note would be 8, a quaternote would be 4, and a whole note would be 1.  3 half note triplets should equal 1, so they would each get the value of 3.  A quarter note triplet woudl get 6, an eighth note triplet would get 12.  Thus, the general rule is:  Triplet (X) =  X * (3/2).
+
+
+There are two approaches to tied notes.  The first is that they are represented by a single value in the underlying structure, and it is just a transform that makes them have multiple note-heads.  THe second approach is to represent them as multiple events, with some form of "continued" indicator.  I prefer the first approach, as it more closely represents the intention of the music, and will allso allow for cleaner resizing of note durations.
+
+To extend a note by a fraction of its current value, you add a dot.  Thus, a A duration of 1/6  = 1/4 + 1/8 and is represented by a dotted quarter note.  To distinguish this from a triplet requires "look ahead" or some flag on either the dotted or triplet values indicating which means to render them.  Alternately, a note can be rendered in its dot form, and then re-rendered if the parsing process keeps track, and realizes that there are 3 notes in a row that can be transformed into triplets.
+
+The trade off is in the JSON representation of the note duration.  Ideally, the normal view of the music would not require a key/value pair for each aspect of a note, but instead it could be represented in an array as [pitch,duration].
+
 */
 
 

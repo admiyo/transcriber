@@ -162,46 +162,45 @@ function transcriber(spec){
         }else{
             center_x = quantize_x(center_x);
             last_vert = that.svg.line( center_x, 0 , center_x, 800,
-                                       {stroke: 'green', strokeWidth: 4});
+                                       {stroke: 'red', strokeWidth: 4});
         }
     }
 
-    function redo_horiz(center_y){
+    function redo_horiz(center_y,center_x){
         if (last_horiz){
             that.svg.remove(last_horiz);
             last_horiz = null;
         }
         var line_y =quantize_y(center_y);
-        last_horiz = that.svg.line(diameter, line_y, width, line_y,
-                                   {stroke: 'yellow', strokeWidth: 4});
-    }
+        var stroke_color = 'red';
+        if ( center_x >= next_note){
+            var stroke_color = 'yellow';
+        }
 
+
+        last_horiz = that.svg.line(diameter, line_y, width, line_y,
+                                   {stroke: stroke_color, strokeWidth: 4});
+    }
 
     var note_count=0;
 
     if (spec.editable){
+        container.mousemove(function(evt){
+            redo_vert(evt.layerX);
+            redo_horiz(evt.layerY,evt.layerX);
+        });
 
-    container.mousemove(function(evt){
-        var center_y = evt.layerY;//-this.offsetTop;
-        var center_x=evt.layerX;//-this.offsetLeft;
-        redo_vert(center_x);
-        redo_horiz(center_y);
-    });
-
-    container.click(function(evt){
-        div = this;
-        var g = that.svg.group({stroke: 'black', strokeWidth: 2});
-        var center_y = evt.layerY;//-that.offsetTop;
-        var center_x=evt.layerX;//-that.offsetLeft;
-        var i;
-        //for now, short circuit the function.  Later, we'll use this test to decide if we are adding new notes or adjusting previous.
-        if (next_note > center_x) {
-            return;
-        }
-        var note_y =quantize_y(center_y);
-        redo_vert(center_x);
-        add_note(note_y);
-    })
+        container.click(function(evt){
+            //for now, short circuit the function.
+            //Later, we'll use this test to decide if we are adding new notes
+            // or adjusting previous.
+            if (next_note > evt.layerX) {
+                return;
+            }
+            var note_y =quantize_y(evt.layerY);
+            redo_vert(evt.layerX);
+            add_note(note_y);
+        })
     };
 
 
@@ -249,7 +248,7 @@ function transcriber(spec){
        note_y is vertical position
        accidental is null, for none, 's' for sharp, 'f' for flat
     */
-    function add_note(note_y,accidental) {
+    function add_note(note_y,accidental,duration) {
 
         var g = that.svg.group({stroke: 'black',
                                 strokeWidth: 2,
