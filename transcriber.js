@@ -327,9 +327,8 @@ function transcriber(spec){
         draw_flag(g, note_y, duration);
 
 
-
-        var div_top =(note_y+this.offsetTop - radius);
-        var div_left =(next_note+ this.offsetLeft - radius)
+        var div_top =(note_y+that.offsetTop - radius);
+        var div_left =(next_note+ that.offsetLeft - radius)
         var div = $('<div/>',{
             css:{
                 position:'absolute',
