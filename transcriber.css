@@ -1,3 +1,15 @@
+.toolbar{
+    height: 100; width: 1400; float:top
+}
+
+.toolbar ul{
+    list-style-type: none;
+}
+
+.toolbar ul li {
+    display: inline;
+}
+
 .staff {
     border: .2em dotted #900;
     display:block;

@@ -3,8 +3,8 @@
 
 $(function() {
 
-
-    var top_staff =  transcriber({
+    var staff = {
+        top:transcriber({
         container: $('#top'),
         radius: 8,
         clef: 'g',
@@ -12,9 +12,9 @@ $(function() {
             left: 30,
             right: 100,
             top: 0
-        }});
+        }}),
 
-    var mid_staff =     transcriber({
+        mid:    transcriber({
         container: $('#middle'),
         radius: 16,
         clef: 'g',
@@ -23,9 +23,8 @@ $(function() {
             left: 30,
             right: 100,
             top: 0
-        }});
-
-var bot_staff =    transcriber({
+        }}),
+        bot:   transcriber({
         container: $('#bottom'),
         radius: 8,
         clef: 'g',
@@ -33,7 +32,8 @@ var bot_staff =    transcriber({
             left: 30,
             right: 100,
             top: 0
-        }});
+        }})
+    };
 
     var left_staff = [];
 
@@ -57,17 +57,25 @@ var bot_staff =    transcriber({
     }
 
     $('#load').click(function(){
-        top_staff.load('file:music.json');
-	mid_staff.load('file:music.json');
-	left_staff[0].load('file:music.json');
+        staff.top.load('file:music.json');
+	staff.mid.load('file:music.json');
+
+        left_staff[0].load('file:music.json');
     });
 
     $('#clear').click(function(){
-        mid_staff.clear();
+        var i;
+        for (i in staff){
+            staff[i].clear();
+        }
+        for (i = 0; i < left_staff.length; i +=1 ){
+            left_staff[i].clear('file:music.json');
+        }
+
     });
 
     $('#save').click(function(){
-        top_staff.save('saveurl');
+        staff.mid.save('saveurl');
     });
 })
 
@@ -204,6 +212,14 @@ function transcriber(spec){
     };
 
 
+    function draw_flag(g, note_y, duration){
+        if (duration >= 128) return;
+        that.svg.line(
+            g,
+            next_note+radius, note_y,
+            next_note+radius, note_y-6*radius);
+    }
+
     function draw_sharp(g,note_y){
         that.svg.line(
             g,
@@ -263,13 +279,22 @@ function transcriber(spec){
             draw_flat(g,note_y);
         }
 
+        var fill = 'white';
+
+        if (duration < 64){
+            fill = 'black';
+        }
+
         var note = that.svg.circle(
             g,next_note, note_y, radius,
             {
                 id:  note_id,
-                fill: 'clear',
+                fill: fill,
                 stroke: 'black',
-                strokeWidth: 3});
+                strokeWidth: 1,
+                click:select_note
+
+            });
             //var svg = container.svg('get');
 
             /*
@@ -287,7 +312,7 @@ function transcriber(spec){
             });
             $(this).click(unselect_note);
         }
-
+        
         function  unselect_note(evt){
             $(this).css({
                 left:div_left +"px",
@@ -298,6 +323,10 @@ function transcriber(spec){
             });
             $(this).click(select_note);
         }
+
+        draw_flag(g, note_y, duration);
+
+
 
         var div_top =(note_y+this.offsetTop - radius);
         var div_left =(next_note+ this.offsetLeft - radius)
@@ -375,7 +404,7 @@ function transcriber(spec){
                 note =  response.notes[i];
                 pitch = note[0];
                 var y = pitch_to_y(pitch,true);
-                add_note(y, is_accidental(pitch) ? accidental : null );
+                add_note(y, is_accidental(pitch) ? accidental : null,note[1] || 64 );
             }
         }
 
