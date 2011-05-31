@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   height="153.122"
+   width="95.1158"
+   id="svg3004"
+   version="1.1"
+   inkscape:version="0.48.1 r9760"
+   sodipodi:docname="treble_clef_01.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1680"
+     inkscape:window-height="989"
+     id="namedview3038"
+     showgrid="false"
+     inkscape:zoom="1.5935007"
+     inkscape:cx="48.812998"
+     inkscape:cy="76.560997"
+     inkscape:window-x="0"
+     inkscape:window-y="26"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg3004" />
+  <metadata
+     id="metadata3006">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title></dc:title>
+        <dc:description>email adress</dc:description>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li />
+            <rdf:li>symbol</rdf:li>
+            <rdf:li>musicsym</rdf:li>
+            <rdf:li>signs_and_symbols</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://www.openclipart.org">
+            <dc:title>Yves Aubry (yvounet)</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Yves Aubry (yvounet)</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Yves Aubry (yvounet)</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:date />
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://web.resource.org/cc/PublicDomain" />
+        <dc:language>en</dc:language>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://web.resource.org/cc/PublicDomain">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs3008">
+    <marker
+       id="ArrowEnd"
+       markerHeight="3"
+       markerUnits="strokeWidth"
+       markerWidth="4"
+       orient="auto"
+       refX="0"
+       refY="5"
+       viewBox="0 0 10 10">
+      <path
+         d="M 0 0 L 10 5 L 0 10 z"
+         id="path3011" />
+    </marker>
+    <marker
+       id="ArrowStart"
+       markerHeight="3"
+       markerUnits="strokeWidth"
+       markerWidth="4"
+       orient="auto"
+       refX="10"
+       refY="5"
+       viewBox="0 0 10 10">
+      <path
+         d="M 10 0 L 0 5 L 10 10 z"
+         id="path3014" />
+    </marker>
+  </defs>
+  <path
+     inkscape:connector-curvature="0"
+     id="path3028"
+     style="fill:#000000;stroke:#000000;stroke-width:1"
+     d="m 39.542,140.49 c 0.0219,8.47 18.8159,7.394 18.7534,-6.573 C 58.3202,120.31 40.3408,44.1715 40.1401,29.6106 39.9287,18.0538 46.2624,5.10107 51.6885,5.242 c 4.2986,0.141 8.3376,9.8729 8.3154,21.9864 0.3264,39.1728 -33.9808,36.6407 -33.9808,63.4088 0,17.3018 14.3634,21.8718 21.5451,21.8718 C 71.888,112.346 67.8074,83.1292 52.3015,83.1292 43.1612,82.8026 35.1634,95.2074 47.2417,105.49 26.8392,96.5132 37.775,74.805 53.9337,74.6417 75.4788,74.8048 79.2329,114.304 47.5682,114.467 28.6346,114.631 20.6368,97.9821 20.8,84.9245 20.8,59.7886 57.851,45.262 57.3614,24.0434 c 0,-13.384 -13.8738,-7.3449 -14.2002,14.2002 0.3265,13.3841 17.6278,84.0584 17.4646,94.9944 0,22.524 -28.89,15.179 -28.89,3.754 0.1632,-16.322 16.9749,-4.734 11.7519,-4.244 -4.0806,7.182 -3.9457,7.742 -3.9457,7.742 z" />
+  <path
+     inkscape:connector-curvature="0"
+     id="path3030"
+     style="fill:#636363;stroke:#000000;stroke-width:1"
+     d="m 47.3695,133.394 c 0,3.789 -3.1601,6.865 -7.0534,6.865 -3.8933,0 -7.0535,-3.076 -7.0535,-6.865 0,-3.79 3.1602,-6.866 7.0535,-6.866 3.8933,0 7.0534,3.076 7.0534,6.866 z" />
+  <path
+     inkscape:connector-curvature="0"
+     id="path3032"
+     style="fill:#000000;stroke:none"
+     d="m 55.0311,110.984 2.3125,0 0,2.25 -2.3125,0 0,-2.25 z" />
+  <path
+     inkscape:connector-curvature="0"
+     id="path3034"
+     style="fill:#000000;stroke:none"
+     d="m 48.2811,75.672 2.9375,0 0,7.3125 -2.9375,0 0,-7.3125 z" />
+  <path
+     inkscape:connector-curvature="0"
+     id="path3036"
+     style="fill:#000000;stroke:none"
+     d="m 43.0732,48.5112 1.393,-0.2405 1.9603,12.9371 -1.393,0.2405 -1.9603,-12.9371 z" />
+</svg>

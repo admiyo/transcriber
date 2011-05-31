@@ -105,6 +105,11 @@ function transcriber(spec){
     reset();
 
     function drawIntro(svg) {
+
+        var clef = svg.load('treble_clef.svg');
+
+        var paths = $('path', this);
+
         that.offsetLeft = this.offsetLeft;
         that.offsetTop = this.offsetTop;
         var g = svg.group({stroke: 'black', strokeWidth: 2});
@@ -114,6 +119,8 @@ function transcriber(spec){
             svg.line(g, diameter, diameter*i+top_line, width, diameter*i+top_line);
         }
         that.svg = svg;
+
+
 
         that.svg.script("function circle_click(evt) {\n  var circle = evt.target;\n  circle.setAttribute(\"fill\", \"blue\");\n}", "text/ecmascript");
 

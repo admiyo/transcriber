@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   height="94.000000pt"
+   id="svg1"
+   inkscape:version="0.48.1 r9760"
+   sodipodi:docname="bass_clef_01.svg"
+   sodipodi:version="0.32"
+   width="155.00000pt"
+   version="1.1">
+  <metadata
+     id="metadata3132">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title></dc:title>
+        <dc:description />
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li />
+            <rdf:li>symbol</rdf:li>
+            <rdf:li>musicsym</rdf:li>
+            <rdf:li>music</rdf:li>
+            <rdf:li>signs_and_symbols</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://www.openclipart.org">
+            <dc:title>Jonadab the Unsightly One</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Jonadab the Unsightly One</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Jonadab the Unsightly One</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:date />
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://web.resource.org/cc/PublicDomain" />
+        <dc:language>en</dc:language>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://web.resource.org/cc/PublicDomain">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs3">
+    <linearGradient
+       id="linearGradient830">
+      <stop
+         id="stop831"
+         offset="0"
+         style="stop-color:#000;stop-opacity:1;" />
+      <stop
+         id="stop832"
+         offset="1"
+         style="stop-color:#fff;stop-opacity:1;" />
+    </linearGradient>
+    <radialGradient
+       id="radialGradient833"
+       xlink:href="#linearGradient830" />
+    <linearGradient
+       id="linearGradient834"
+       x1="-1.0164395e-18"
+       x2="1.0000000"
+       xlink:href="#linearGradient830"
+       y1="0.50000000"
+       y2="0.50000000" />
+  </defs>
+  <sodipodi:namedview
+     bordercolor="#666666"
+     borderopacity="1.0"
+     id="base"
+     inkscape:cx="87.260778"
+     inkscape:cy="44.672479"
+     inkscape:pageopacity="0.0000000"
+     inkscape:pageshadow="2"
+     inkscape:window-height="989"
+     inkscape:window-width="1680"
+     inkscape:window-x="0"
+     inkscape:window-y="26"
+     inkscape:zoom="4.9119411"
+     pagecolor="#a2a2a2"
+     showgrid="false"
+     snaptogrid="false"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <g
+     id="g869"
+     transform="translate(-74.81768,-328.2816)">
+    <g
+       id="g858"
+       transform="translate(12.21513,0.000000)">
+      <path
+         d="m 344.56847,325.81644 c 0,2.38929 -1.9369,4.32619 -4.32619,4.32619 -2.38929,0 -4.32619,-1.9369 -4.32619,-4.32619 0,-2.38929 1.9369,-4.3262 4.32619,-4.3262 2.38929,0 4.32619,1.93691 4.32619,4.3262 z"
+         id="path855"
+         sodipodi:cx="340.24228"
+         sodipodi:cy="325.81644"
+         sodipodi:rx="4.3261919"
+         sodipodi:ry="4.3261919"
+         sodipodi:type="arc"
+         style="fill:#000000;fill-opacity:0.75000000;fill-rule:evenodd;stroke:#000000;stroke-width:1.0000000pt;"
+         transform="translate(-188.3166,32.06472)" />
+      <path
+         d="m 344.56847,325.81644 c 0,2.38929 -1.9369,4.32619 -4.32619,4.32619 -2.38929,0 -4.32619,-1.9369 -4.32619,-4.32619 0,-2.38929 1.9369,-4.3262 4.32619,-4.3262 2.38929,0 4.32619,1.93691 4.32619,4.3262 z"
+         id="path857"
+         sodipodi:cx="340.24228"
+         sodipodi:cy="325.81644"
+         sodipodi:rx="4.3261919"
+         sodipodi:ry="4.3261919"
+         sodipodi:type="arc"
+         style="fill:#000000;fill-opacity:0.75000000;fill-rule:evenodd;stroke:#000000;stroke-width:1.0000000pt;"
+         transform="translate(-189.3345,53.44120)" />
+    </g>
+    <g
+       id="g866">
+      <path
+         d="m 118.07959,368.82385 c 0,4.77858 -3.8738,8.65239 -8.65238,8.65239 -4.77858,0 -8.65239,-3.87381 -8.65239,-8.65239 0,-4.77858 3.87381,-8.65238 8.65239,-8.65238 4.77858,0 8.65238,3.8738 8.65238,8.65238 z"
+         id="path861"
+         sodipodi:cx="109.42721"
+         sodipodi:cy="368.82385"
+         sodipodi:rx="8.6523838"
+         sodipodi:ry="8.6523838"
+         sodipodi:type="arc"
+         style="fill:#000000;fill-opacity:0.75000000;fill-rule:evenodd;stroke:#000000;stroke-width:1.2520211;stroke-opacity:1.0000000;stroke-dasharray:none;"
+         transform="matrix(1.397740,0.000000,0.000000,1.397740,-44.92324,-146.3143)" />
+      <path
+         d="M 95.859988,371.63448 C 90.264914,352.12932 103.76008,339.25423 121.54860,338.83318 C 139.59160,338.41213 151.02486,354.43377 151.40900,369.22065 C 152.04763,384.00753 145.38520,396.15050 131.91497,410.73661 C 120.87703,422.89747 99.665017,432.61417 98.088584,431.20186 C 96.332204,429.78955 114.29957,421.85513 125.47619,409.09796 C 132.40912,401.00465 139.51693,383.91281 138.91821,371.26710 C 137.87516,354.61161 124.48340,345.01552 119.25108,344.06033 C 115.79939,343.34942 112.38667,344.18009 109.07043,345.73636 C 106.34185,347.07037 104.63525,349.73327 104.56631,351.19160 C 104.40330,354.38523 108.47495,356.28672 110.68634,356.95999 C 118.94456,359.45486 107.09689,380.69396 95.859988,371.63448 z "
+         id="path864"
+         sodipodi:nodetypes="czzszssssssc"
+         style="fill:#000000;fill-rule:evenodd;stroke:#000000;stroke-opacity:1.0000000;stroke-width:1pt;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1.0000000;" />
+    </g>
+  </g>
+</svg>
