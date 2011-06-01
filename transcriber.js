@@ -99,16 +99,13 @@ function transcriber(spec){
     var notes=[];
 
     function  reset(){
-        next_note = spec.border.left;
+        next_note = spec.border.left + radius * 8;
         notes=[];
     }
     reset();
 
     function drawIntro(svg) {
 
-        var clef = svg.load('treble_clef.svg');
-
-        var paths = $('path', this);
 
         that.offsetLeft = this.offsetLeft;
         that.offsetTop = this.offsetTop;
@@ -120,12 +117,11 @@ function transcriber(spec){
         }
         that.svg = svg;
 
-
-
-        that.svg.script("function circle_click(evt) {\n  var circle = evt.target;\n  circle.setAttribute(\"fill\", \"blue\");\n}", "text/ecmascript");
+//        that.svg.script("function circle_click(evt) {\n  var circle = evt.target;\n  circle.setAttribute(\"fill\", \"blue\");\n}", "text/ecmascript");
 
     }
 
+    that.draw_intro = drawIntro;
 
     container.svg({onLoad: drawIntro});
 
@@ -315,39 +311,62 @@ function transcriber(spec){
                 top: (div_top-radius)  +"px",
                 height: (2*diameter) +"px",
                 width: (2*diameter)+ "px",
-                border: "3px coral solid"
+                border: "3px coral solid",
             });
+
+            $(this).find('img').css('display','inline');
+
             $(this).click(unselect_note);
         }
         
         function  unselect_note(evt){
             $(this).css({
+/*
                 left:div_left +"px",
                 top: div_top  +"px",
                 height: diameter +"px",
                 width: diameter+ "px",
+*/
                 border: 'none'
             });
+            $(this).find('img').css('display','none');
+
             $(this).click(select_note);
         }
 
         draw_flag(g, note_y, duration);
 
 
-        var div_top =(note_y+that.offsetTop - radius);
-        var div_left =(next_note+ that.offsetLeft - radius)
+        var div_top =(note_y+that.offsetTop - diameter);
+        var div_left =(next_note+ that.offsetLeft - diameter)
         var div = $('<div/>',{
             css:{
                 position:'absolute',
                 left:div_left +"px",
                 top:div_top+"px",
-                height: diameter +"px",
-                width: diameter+ "px",
+                height: 5*diameter +"px",
+                width: 5*diameter+ "px",
             },
             border: 1,
             click: select_note,
             nate: note
         }).appendTo($('body'));
+        var images = ["back.svg","b_up.svg","b_plus.svg","next.svg",
+                      "b_minus.svg",   "b_down.svg", ];
+
+        
+        for ( var i = 0; i < images.length; i+= 1){
+            div.append($('<img />',{
+                src:images[i],
+                width: 30,
+                height: 30,
+                css:{
+                    display:'none'
+                }
+            }));
+        }
+
+
 
         function note_staves(g, next_note, i){
             that.svg.line(g, next_note-(1.5 *radius), i, next_note+( 1.5 *radius), i);
@@ -405,6 +424,13 @@ function transcriber(spec){
 
             var accidental = null;
             accidental =  (sharp_keys[response.key]) ? 's' : 'f';
+
+
+            var clef = that.svg.load(response.clef+'_clef.svg');
+            that.draw_intro(that.svg);
+
+        var paths = $('path', this);
+
 
             for (var i = 0 ; i < response.notes.length; i += 1){
                 note =  response.notes[i];
