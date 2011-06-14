@@ -1,57 +1,6 @@
 
 
 
-var freqs ={ a : 220.00  , b :  246.94  , c :  261.63  , d : 293.66 , e : 329.63, f: 349.23 , g : 392.00  };
-
-
-
-
-function playToneOsc(freq) {
-
-    var oscillator =  new Oscillator(22050);
-    var output = new Audio();
-    output.mozSetup(1, 44100 );
-
-    oscillator.frequency =  freq;//
-
-    var buffer = new Float32Array(22050);
-    var i, l = buffer.length;
-    // Iterate through the buffer
-    for (i=0; i<l; i++){
-	// Advance the oscillator angle, add some flavor with Math.random noise.
-	oscillator.generate((Math.random() * 2 - 1) * 0.3);
-	// Set the sample for both channels to oscillator's output,
-	// and multiply that with 0.2 to lower the volume to a less
-	// irritating/distorted level.
-	buffer[i] = buffer[++i] = oscillator.getMix() * 0.2;
-    }
-    output.mozWriteAudio(buffer);
-}
-
-var oscillator =  new Oscillator(22050);
-
-function genPitch(freq) {
-
-    oscillator.frequency =  freq;
-
-    var buffer = new Float32Array(22050);
-    var i, l = buffer.length;
-    // Iterate through the buffer
-    for (i=0; i<l; i++){
-	// Advance the oscillator angle, add some flavor with Math.random noise.
-	oscillator.generate((Math.random() * 2 - 1) * 0.3);
-	// Set the sample for both channels to oscillator's output,
-	// and multiply that with 0.2 to lower the volume to a less
-	// irritating/distorted level.
-	buffer[i] = buffer[++i] = oscillator.getMix() * 0.2;
-    }
-
-    return buffer;
-}
-
-
-
-
 function Oscillator(samplerate, freq)
 {
 	var	self		= this,
@@ -151,35 +100,76 @@ function Oscillator(samplerate, freq)
 }
 
 
-var output = new Audio();
-output.mozSetup(1, 44100 );
 
-var pitches = {};
 
-var notes = ['a','b','c','d','e','f' ,'g'];
+function Synthesizer(){
 
-for ( var i =0; i < notes.length; i +=1){
-    var curr = notes[i];
-    pitches[curr] = genPitch(freqs[curr]);
+var freqs ={ a : 220.00  , b :  246.94  , c :  261.63  , d : 293.66 , e : 329.63, f: 349.23 , g : 392.00  };
+
+
+
+var oscillator =  new Oscillator(22050);
+
+    function genPitch(freq) {
+
+        oscillator.frequency =  freq;
+
+        var buffer = new Float32Array(22050);
+        var i, l = buffer.length;
+        // Iterate through the buffer
+        for (i=0; i<l; i++){
+	    // Advance the oscillator angle, add some flavor with Math.random noise.
+	    oscillator.generate((Math.random() * 2 - 1) * 0.3);
+	    // Set the sample for both channels to oscillator's output,
+	    // and multiply that with 0.2 to lower the volume to a less
+	    // irritating/distorted level.
+	    buffer[i] = buffer[++i] = oscillator.getMix() * 0.2;
+        }
+        
+        return buffer;
+    }
+
+    var output = new Audio();
+    output.mozSetup(1, 44100 );
+
+    var pitches = {};
+
+    var notes = ['a','b','c','d','e','f' ,'g'];
+
+    for ( var i =0; i < notes.length; i +=1){
+        var curr = notes[i];
+        pitches[curr] = genPitch(freqs[curr]);
+    }
+
+    function playNote(note) {
+        var buffer = pitches[note];
+        output.mozWriteAudio(buffer);
+    }
+
+
+    function playTones(notes){
+        var i = 0;
+        function playNextNote(){
+            playNote(notes[i]);
+            i += 1;
+            if ( i < notes.length){
+                setTimeout(playNextNote,1000);
+            }
+        }
+        playNextNote();
+    }
+
+    this.playTones = playTones;
+
+
+    return this;
 }
 
-function playNote(note) {
-
-    var buffer = pitches[note];
-    output.mozWriteAudio(buffer);
-    var millis = 1000;
-    var date = new Date();
-    var curDate = null;
-    do { curDate = new Date(); }
-    while(curDate-date < millis);
-
-}
-
-
+var synth = new Synthesizer();
 
 function playTones(){
-    var notes = ['c','c','f','f','g','g' ,'f'];
-    for (var i = 0; i < notes.length; i +=1){
-        playNote(notes[i]);
-    }
+    var notes = ['c','g','f','e','d','g' ,'c'];
+    synth.playTones(notes);
 }
+
+
