@@ -1,3 +1,9 @@
+
+/*
+ * The oscillator and the code to generate the pitches is from
+ https://developer.mozilla.org/en/Creating_a_simple_synth 
+ by Jussi Kalliosksoski
+*/
 function Oscillator(samplerate, freq)
 {
     var	phase		= 0,
@@ -52,9 +58,6 @@ function Oscillator(samplerate, freq)
     };
 }
 
-
-
-
 function Synthesizer(){
 
 var freqs ={ a : 220.00  , b :  246.94  , c :  261.63  , d : 293.66 , e : 329.63, f: 349.23 , g : 392.00  };
@@ -83,7 +86,6 @@ var oscillator =  new Oscillator(22050);
     function genPitch(freq) {
 
         oscillator.frequency =  freq;
-        
         var buffer = new Float32Array(22050);
         var i, l = buffer.length;
         // Iterate through the buffer
@@ -102,54 +104,26 @@ var oscillator =  new Oscillator(22050);
     var output = new Audio();
     output.mozSetup(1, 44100 );
 
-    var pitches = {};
     var keyboard = [];
-    var notes = ['a','b','c','d','e','f' ,'g'];
-
-
-    for ( var i =0; i < notes.length; i +=1){
-        var curr = notes[i];
-        pitches[curr] = genPitch(freqs[curr]);
-    }
 
     for ( i =0; i < frequencies.length; i +=1){
         var curr = frequencies[i];
         keyboard.push( genPitch(curr) );
     }
 
-
-    function playNote(note) {
-        var buffer = pitches[note];
-        output.mozWriteAudio(buffer);
-    }
-
-
     function playKey(key) {
         var buffer = keyboard[key];
         output.mozWriteAudio(buffer);
     }
 
-
-    function playTones(notes){
-        var i = 0;
-        function playNextNote(){
-            playNote(notes[i]);
-            i += 1;
-            if ( i < notes.length){
-                setTimeout(playNextNote,1000);
-            }
-        }
-        playNextNote();
-    }
-
-    this.playTones = playTones;
+    this.playKey = playKey;
 
     function playKeys(keys){
         var i = 0;
         function playNextKey(){
             playKey(keys[i]);
-            if ( i < notes.length){
-                i += 1;
+            i += 1;
+            if ( i < keys.length){
                 setTimeout(playNextKey,1000);
             }
         }

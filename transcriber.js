@@ -144,6 +144,20 @@ function transcriber(spec){
          return note_y;
     }
 
+     function y_to_pitch(center_y){
+         var steps;
+         var note_y = top_line;
+         if (top_line > center_y){
+             steps =  (top_line - center_y) / (radius);
+         }else{
+             steps =  (top_line - center_y) / (radius);
+         }
+         //top line is F4  or 56 notes from the bottom
+         steps += 56;
+         return steps;
+    }
+
+
 
     function quantize_x(center_x){
         var steps;
@@ -211,6 +225,9 @@ function transcriber(spec){
             var note_y =quantize_y(evt.layerY);
             redo_vert(evt.layerX);
             add_note(note_y);
+            redo_vert(evt.layerX);
+            redo_horiz(evt.layerY,evt.layerX);
+            synth.playKey(y_to_pitch(note_y));
         })
     };
 
