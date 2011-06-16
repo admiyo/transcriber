@@ -58,7 +58,7 @@ $(function() {
 
     $('#load').click(function(){
         staff.top.load('file:music.json');
-	staff.mid.load('file:music.json');
+        staff.mid.load('file:music.json');
 
         left_staff[0].load('file:music.json');
     });
@@ -324,10 +324,6 @@ function transcriber(spec){
 
         function  select_note(evt){
             $(this).css({
-                left:(div_left-radius) +"px",
-                top: (div_top-radius)  +"px",
-                height: (2*diameter) +"px",
-                width: (2*diameter)+ "px",
                 border: "3px coral solid",
             });
 
@@ -335,15 +331,9 @@ function transcriber(spec){
 
             $(this).click(unselect_note);
         }
-        
+
         function  unselect_note(evt){
             $(this).css({
-/*
-                left:div_left +"px",
-                top: div_top  +"px",
-                height: diameter +"px",
-                width: diameter+ "px",
-*/
                 border: 'none'
             });
             $(this).find('img').css('display','none');
@@ -360,25 +350,63 @@ function transcriber(spec){
             'class':'note_edit',
             css:{
                 position:'absolute',
-                left:div_left +"px",
-                top:div_top+"px",
-                height: 5*diameter +"px",
-                width: 5*diameter+ "px",
-            },
-            border: 1,
-            click: select_note,
-            nate: note
-        }).appendTo($('body'));
-        var images = ["back.svg","b_up.svg","b_plus.svg","next.svg",
-                      "b_minus.svg",   "b_down.svg", ];
+                left: next_note -diameter  +'px',
+                top: note_y -diameter + 'px',
+                height: 2*diameter +"px",
+                width: 2*diameter+ "px",
 
-        
+            },
+            click: select_note,
+            note: note
+        }).appendTo(container);
+
+        function shorter(){
+            alert('make note shorter');
+            return false;
+        }
+
+        function longer(){
+            alert('make note longer');
+            return false;
+        }
+        function higher(){
+            alert('make note higer');
+            return false;
+        }
+        function lower(){
+            alert('make note lower');
+            return false;
+        }
+        function back(){
+            alert('move note back');
+            return false;
+        }
+
+        function forward(){
+            alert('move note forward');
+            return false;
+        }
+
+        var images = [
+            {name:"back.svg",x:-0.5,y:2.5,action: back},
+            {name:"next.svg",x:2.5,y:2.5,action:forward},
+            {name:"b_up.svg",x:1,y:-0.5,action:higher},
+            {name:"b_down.svg",x:1,y:3,action:lower},
+            {name:"b_minus.svg",x:-0.5,y:0,action:shorter},
+            {name:"b_plus.svg",x:2.5,y:0,action:longer}];
+
+
         for ( var i = 0; i < images.length; i+= 1){
+            var image = images[i];
             div.append($('<img />',{
-                src:images[i],
+                src:image.name,
                 width: 30,
                 height: 30,
+                click: image.action,
                 css:{
+                    position:'absolute',
+                    left: ( image.x * radius ) + 'px',
+                    top:  ( image.y * radius ) +'px',
                     display:'none'
                 }
             }));
@@ -483,7 +511,7 @@ function transcriber(spec){
 
     that.clear = function(){
         $("g.notes",container).remove();
-        $('.note_edit').remove();
+        $('.note_edit',container).remove();
         reset();
     }
 
@@ -493,4 +521,3 @@ function transcriber(spec){
 
     return that;
 };
-
