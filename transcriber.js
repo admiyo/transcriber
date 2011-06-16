@@ -40,7 +40,7 @@ $(function() {
     for (var i = 0; i < 20; i+=1){
 
         var div = $('<div></div>',{
-            id: 'staff_i',
+            id: 'staff_'+i,
             'class' : 'staff',
             style: '{height: 50; width: 200; }'
         }).appendTo($('#leftnav'));
@@ -357,6 +357,7 @@ function transcriber(spec){
         var div_top =(note_y+that.offsetTop - diameter);
         var div_left =(next_note+ that.offsetLeft - diameter)
         var div = $('<div/>',{
+            'class':'note_edit',
             css:{
                 position:'absolute',
                 left:div_left +"px",
@@ -482,6 +483,7 @@ function transcriber(spec){
 
     that.clear = function(){
         $("g.notes",container).remove();
+        $('.note_edit').remove();
         reset();
     }
 
