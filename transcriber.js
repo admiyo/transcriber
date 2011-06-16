@@ -77,6 +77,11 @@ $(function() {
     $('#save').click(function(){
         staff.mid.save('saveurl');
     });
+
+    $('#play').click(function(){
+        staff.mid.play();
+    });
+
 })
 
 
@@ -518,6 +523,11 @@ function transcriber(spec){
     that.save = function(url){
         alert('saving '+url);
     }
+
+    that.play = function(){
+        alert('playing');
+    }
+
 
     return that;
 };
