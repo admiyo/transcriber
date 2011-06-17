@@ -585,6 +585,7 @@ function transcriber(spec){
     }
 
     that.clear = function(){
+        that.notes = [];
         $("g.notes",container).remove();
         $('.note_edit',container).remove();
         reset();
