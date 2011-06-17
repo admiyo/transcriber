@@ -57,10 +57,8 @@ $(function() {
     }
 
     $('#load').click(function(){
-        staff.top.load('file:music.json');
-        staff.mid.load('file:music.json');
-
-        left_staff[0].load('file:music.json');
+        staff.mid.load('music.json');
+        left_staff[0].load('music.json');
     });
 
     $('#clear').click(function(){
