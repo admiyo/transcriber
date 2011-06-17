@@ -112,6 +112,9 @@ function transcriber(spec){
     function drawIntro(svg) {
 
 
+        //var clef = svg.load('treble_clef.svg');
+
+
         that.offsetLeft = this.offsetLeft;
         that.offsetTop = this.offsetTop;
         var g = svg.group({stroke: 'black', strokeWidth: 2});
@@ -417,8 +420,6 @@ function transcriber(spec){
             }));
         }
 
-
-
         function note_staves(g, next_note, i){
             that.svg.line(g, next_note-(1.5 *radius), i, next_note+( 1.5 *radius), i);
         }
@@ -477,12 +478,10 @@ function transcriber(spec){
             accidental =  (sharp_keys[response.key]) ? 's' : 'f';
 
 
-            var clef = that.svg.load(response.clef+'_clef.svg');
+//            var clef = that.svg.load(response.clef+'_clef.svg');
             that.draw_intro(that.svg);
 
         var paths = $('path', this);
-
-
             for (var i = 0 ; i < response.notes.length; i += 1){
                 note =  response.notes[i];
                 pitch = note[0];
