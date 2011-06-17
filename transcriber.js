@@ -239,54 +239,46 @@ function transcriber(spec){
         })
     };
 
-
-    function draw_flag(g, note_y, duration){
-        if (duration >= 128) return;
+    function draw_sharp(g,note_x,note_y){
+        var x = note_x - diameter * 2;
         that.svg.line(
             g,
-            next_note+radius, note_y,
-            next_note+radius, note_y-6*radius);
-    }
-
-    function draw_sharp(g,note_y){
+            x-( 2 *radius), note_y+radius/2+1,
+            x+( 2 *radius), note_y+radius/2-1)
         that.svg.line(
             g,
-            next_note-( 2 *radius), note_y+radius/2+1,
-            next_note+( 2 *radius), note_y+radius/2-1);
+            x-( 2 *radius), note_y-radius/2+1,
+            x+( 2 *radius), note_y-radius/2-1);
+        
         that.svg.line(
             g,
-            next_note-( 2 *radius), note_y-radius/2+1,
-            next_note+( 2 *radius), note_y-radius/2-1);
-
+            x-(radius/2), note_y+2*radius-1,
+                x-(radius/2), note_y-2*radius+1);
         that.svg.line(
             g,
-            next_note-(radius/2), note_y+2*radius-1,
-            next_note-(radius/2), note_y-2*radius+1);
-        that.svg.line(
-            g,
-            next_note+(radius/2), note_y+2*radius-1,
-            next_note+(radius/2), note_y-2*radius+1);
-        next_note += diameter * 2;
+            x+(radius/2), note_y+2*radius-1,
+            x+(radius/2), note_y-2*radius+1);
     };
 
 
-    function draw_flat(g,note_y){
+    function draw_flat(g,note_x,note_y){
         that.svg.line(
             g,
-            next_note-(radius/2), note_y+2*radius-1,
-            next_note-(radius/2), note_y-2*radius+1);
+            x-(radius/2), note_y+2*radius-1,
+            x-(radius/2), note_y-2*radius+1);
         var path = that.svg.createPath();
-
-        that.svg.path(g, path.move(next_note-(radius/2), note_y+2*radius+1).
-                 curveC(next_note+diameter, note_y+radius,
-                        next_note+radius, note_y,
-                        next_note-(radius/2) , note_y+2*radius/3),{fill:'none'
-                        });
-
-        next_note += diameter * 2;
+        
+        that.svg.path(
+            g, path.move(x-(radius/2), note_y+2*radius+1).
+                curveC(x+diameter, note_y+radius,
+                       x+radius, note_y,
+                       x-(radius/2) , note_y+2*radius/3),
+            {fill:'none'}
+        );
     };
 
 
+    that.notes = [];
 
     /*
        note_y is vertical position
@@ -294,41 +286,110 @@ function transcriber(spec){
     */
     function add_note(note_y,accidental,duration) {
 
-        var g = that.svg.group({stroke: 'black',
-                                strokeWidth: 2,
-                                'class':'notes'});
+
+        var g;
         var i;
         var note_id = "note_"+note_count;
+
+
+        var note = {
+            x:next_note,
+            y:note_y,
+            duration:duration|| 64
+        };
+        if (accidental){
+            next_note += diameter * 2;
+            note.x = next_note
+        }
+
+        that.notes.unshift(note);
+
         note_count +=1;
-        if (accidental === 's'){
-            draw_sharp(g,note_y);
+
+
+        function draw_flag(){
+            if (note.duration >= 128) return;
+            that.svg.line(
+                g,
+                note.x+radius, note.y,
+                note.x+radius, note.y-6*radius);
+            
+            if (note.duration >= 32) return;
+            that.svg.line(
+                g,
+                note.x+radius, note.y-6*radius,
+                note.x+2*radius, note.y-5.5*radius
+            );
+
+            if (note.duration >= 16) return;
+            that.svg.line(
+                g,
+                note.x+radius, note.y-5.5*radius,
+                note.x+2*radius, note.y-5*radius
+            );
+
+            if (note.duration >= 8) return;
+            that.svg.line(
+                g,
+                note.x+radius, note.y-5*radius,
+                note.x+2*radius, note.y-4.5*radius
+            );
+
+
+            if (note.duration >= 4) return;
+            that.svg.line(
+                g,
+                note.x+radius, note.y-4.5*radius,
+                note.x+2*radius, note.y-4*radius
+            );
+
+
+            if (note.duration >= 2) return;
+            that.svg.line(
+                g,
+                note.x+radius, note.y-4*radius,
+                note.x+2*radius, note.y-3.5*radius
+            );
+
         }
-        if (accidental === 'f'){
-            draw_flat(g,note_y);
-        }
 
-        var fill = 'white';
 
-        if (duration < 64){
-            fill = 'black';
-        }
+        function draw_note(){
 
-        var note = that.svg.circle(
-            g,next_note, note_y, radius,
-            {
-                id:  note_id,
-                fill: fill,
-                stroke: 'black',
-                strokeWidth: 1,
-                click:select_note
+            if (g){
+                $(g).remove();
+            }
 
-            });
-            //var svg = container.svg('get');
+            g = that.svg.group({stroke: 'black',
+                                strokeWidth: 2,
+                                'class':'notes'});
 
-            /*
-              These two functions have to be scoped in the same function where
-              the div tag is definied as they access the 'note' variable
-              that is linked with the div tag */
+            if (accidental === 's'){
+                draw_sharp(g,note.x, note.y);
+            }
+            if (accidental === 'f'){
+                draw_flat(g,note.x,note.y);
+            }
+            var fill = 'white';
+            if (note.duration < 64){
+                fill = 'black';
+            }
+
+            that.svg.circle(
+                g,note.x, note.y, radius,
+                {
+                    id:  note_id,
+                    fill: fill,
+                    stroke: 'black',
+                    strokeWidth: 1,
+                    click:select_note
+                });
+            if (note.duration < 128){
+                draw_flag(g, note.y, duration);
+            }
+        };
+
+        draw_note();
 
         function  select_note(evt){
             $(this).css({
@@ -342,14 +403,15 @@ function transcriber(spec){
 
         function  unselect_note(evt){
             $(this).css({
-                border: 'none'
+                border: 'none',
+                left: note.x -diameter  +'px',
+                top: note.y -diameter + 'px'
             });
             $(this).find('img').css('display','none');
 
             $(this).click(select_note);
         }
 
-        draw_flag(g, note_y, duration);
 
 
         var div_top =(note_y+that.offsetTop - diameter);
@@ -358,31 +420,42 @@ function transcriber(spec){
             'class':'note_edit',
             css:{
                 position:'absolute',
-                left: next_note -diameter  +'px',
-                top: note_y -diameter + 'px',
+                left: note.x -diameter  +'px',
+                top: note.y -diameter + 'px',
                 height: 2*diameter +"px",
                 width: 2*diameter+ "px",
 
             },
             click: select_note,
-            note: note
         }).appendTo(container);
 
         function shorter(){
-            alert('make note shorter');
+            note.duration = note.duration / 2;
+            if (note.duration < 1){
+                note.duration = 1;
+            }
+            draw_note();
             return false;
         }
 
         function longer(){
-            alert('make note longer');
+            note.duration = 2 * note.duration;
+            if (note.duration > 256){
+                note.duration = 256;
+            }
+            draw_note();
             return false;
         }
         function higher(){
-            alert('make note higer');
+            note.y -= radius;
+            draw_note();
+            synth.playKey(y_to_pitch(note.y));
             return false;
         }
         function lower(){
-            alert('make note lower');
+            note.y += radius;
+            draw_note();
+            synth.playKey(y_to_pitch(note.y));
             return false;
         }
         function back(){
@@ -524,7 +597,14 @@ function transcriber(spec){
     }
 
     that.play = function(){
-        alert('playing');
+        var keys = [];
+
+        for (var i = 0 ; i < that.notes.length; i += 1){
+            keys.unshift(y_to_pitch(that.notes[i].y));
+        }
+
+        synth.playKeys(keys);
+
     }
 
 
